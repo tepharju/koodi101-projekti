@@ -1,5 +1,5 @@
 ---
-const lista = ["Pekka", "Paavo", "Matti", "Vertti"]
+
 const response = await fetch("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.19&lon=24.95")
 const text = await response.json()
 ---
@@ -14,12 +14,35 @@ const text = await response.json()
 	</head>
 	<body>
 		<h1>Koodi 101 -projekti</h1>
+		<!--
 		<code>{text.properties.meta.updated_at}</code>
 		<code>{text.properties.timeseries[0].data.instant.details.air_temperature}</code>
 		<code>{text.properties.timeseries[0].time}</code>
-		<img src="https://media1.tenor.com/m/OWI_ai132b0AAAAC/wink-dog.gif">
+		img src="https://media1.tenor.com/m/OWI_ai132b0AAAAC/wink-dog.gif"
 		<ul>
 			{lista.map(nimi => <li>{nimi}</li>)}
 		</ul>
+		-->
+		<canvas id="weather-forecast"></canvas>
+
+		<script>
+			import Chart from "chart.js/auto";
+			const response = await fetch("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.19&lon=24.95")
+			const data = await response.json()
+			const ctx = document.getElementById("weather-forecast");
+			new Chart(ctx, {
+				type: "line",
+				data: {
+					labels: data.properties.timeseries.map(elem => elem.time),
+					datasets: [
+						{
+						label: "forecast",
+						data: data.properties.timeseries.map(elem => elem.data.instant.details.air_temperature),
+						}
+					]
+
+				} 
+			}); 
+		</script>
 	</body>
 </html>
