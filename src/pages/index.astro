@@ -1,5 +1,7 @@
 ---
 const lista = ["Pekka", "Paavo", "Matti", "Vertti"]
+const data = await fetch(https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.19&lon=24.95)
+const text = await response.text()
 ---
 
 <html lang="en">
@@ -12,6 +14,7 @@ const lista = ["Pekka", "Paavo", "Matti", "Vertti"]
 	</head>
 	<body>
 		<h1>Koodi 101 -projekti</h1>
+		<code>{text}</code>
 		<img src="https://media1.tenor.com/m/OWI_ai132b0AAAAC/wink-dog.gif">
 		<ul>
 			{lista.map(nimi => <li>{nimi}</li>)}
